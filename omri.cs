@@ -1,127 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace ConsoleApp43
+using NewUnit4;
+namespace ConsoleApp16
 {
-    class Point 
+    public class Program
     {
-        protected double x;
-        protected double y;
-        public double Getx()
+        public static void Main()
         {
-            return this.x;
+            Stack<int> st2 = new Stack<int>();
+            st2.Push(0);
+            st2.Push(-8);
+            st2.Push(-11);
+            st2.Push(-7);
+            st2.Push(-6);
+            st2.Push(-1);
+            st2.Push(-3);
+            st2.Push(0);
+            Stack<int> st1 = new Stack<int>();
+            st1.Push(1);
+            st1.Push(7);
+            st1.Push(2);
+            st1.Push(4);
+            st1.Push(9);
+            st1.Push(3);
+            st1.Push(1);
+            Console.WriteLine(KmoShneyEvarim(st1,st2));
+            Console.ReadLine();
         }
-        public double Gety()
+        public static int BiggestSumofst2(Stack<int>st)
         {
-            return this.y;
-        }
+            int biggestsum = st.Top();
+            int temp = st.Pop();
+            biggestsum += st.Top();
+            while (!st.IsEmpty())
+            {
+                if (biggestsum < (temp + st.Top()))
+                    {
+                        biggestsum = temp + st.Top();
+                    }
+                temp = st.Pop();
+            }
+            return biggestsum;
 
-        public Point(int x, int y)
+        }
+        public static int KmoShneyEvarim(Stack<int>st1 , Stack<int>st2)
         {
-            this.x = x;
-            this.y = y;
+            int temp1 = st1.Pop();
+            while (!st1.IsEmpty())
+            {
+                if((temp1+st1.Top())> BiggestSumofst2(st2))
+                {
+                    return temp1 + st1.Top();
+                }
+                temp1 = st1.Pop();
+            }
+            return 0;
+
         }
     }
-    class Shape
-    {
-        protected Point pr;
-
-        public Shape(Point pr)
-        {
-            this.pr = pr;
-        }
-    }
-    class ThreeDShape:Shape 
-    {
-        protected const int D=3;
-        public ThreeDShape(Point pr):base (pr)
-        {
-        
-        }
-
-    }
-    class TwoDShape:Shape 
-    {
-        protected const int D = 2;
-        public TwoDShape(Point pr):base(pr)
-        {
-
-        }
-    }
-    class Cube : ThreeDShape
-    {
-        protected string name;
-        protected double length;
-        protected double height;
-        protected double width;
-
-        public Cube(string name, double length, double height, double width,Point pr):base (pr)
-        {
-            this.name = name;
-            this.length = length;
-            this.height = height;
-            this.width = width;
-        }
-    }
-    class Sphere:ThreeDShape
-    {
-        protected string name;
-        protected double radius;
-
-        public Sphere(string name, double radius, Point pr):base (pr)
-        {
-            this.name = name;
-            this.radius = radius;
-        }
-        public void PrintVolume()
-        {
-            Console.WriteLine(this.radius*this.radius*this.radius*Math.PI*4/3);
-        }
-    }
-    class Circle : TwoDShape
-    {
-        protected string name;
-        protected double radius;
-
-        public Circle(string name, double radius,Point pr):base(pr)
-        {
-            this.name = name;
-            this.radius = radius;
-        }
-        public void ToString()
-        {
-            Console.WriteLine(this.name);
-            Console.WriteLine(this.pr.Getx());
-            Console.WriteLine(this.pr.Gety());
-            Console.WriteLine(this.radius);
-            Console.WriteLine("the shape has "+D+" dimentions");
-        }
-        public void PrintArea()
-        {
-            
-            Console.WriteLine("the area is "+this.radius*this.radius*Math.PI);
-        }
-    }
-    class Square : TwoDShape
-    {
-        protected string name;
-        protected double width;
-        protected double length;
-
-        public Square(string name, double width, double length,Point pr):base(pr)
-        {
-            this.name = name;
-            this.width = width;
-            this.length = length;
-        }
-        public void PrintArea()
-        {
-            Console.WriteLine(this.width*this.length);
-        }
-    }
-    
-
 }
